@@ -4,5 +4,5 @@ FROM ${BASE_CONTAINER} as base
 
 RUN pip install --no-cache-dir torch torchvision torchaudio
 USER root
-RUN mv /home/${NB_USER}/.bashrc /usr/local/bin/start-notebook.d/sirf_bashrc.sh
+RUN cp /opt/SIRF-SuperBuild/INSTALL/bin/env_sirf.sh /usr/local/bin/start-notebook.d/
 USER ${NB_USER}
