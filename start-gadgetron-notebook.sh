@@ -28,7 +28,7 @@ stop_service(){
   exit 0
 }
 
-SB_PATH=$(dirname "$(dirname "$SIRF_PATH")")
+SB_PATH=$(dirname "$(dirname "${SIRF_PATH:-/opt/SIRF-SuperBuild/INSTALL/python}")")
 echo "start gadgetron"
 pushd "${SB_PATH}"
 test -x ./INSTALL/bin/gadgetron && ./INSTALL/bin/gadgetron >& ~/gadgetron.log&
@@ -44,7 +44,7 @@ done
 echo "link SIRF-Contrib into ~/work"
 if test ! -r SIRF-contrib; then
   echo "Creating link to SIRF-contrib"
-  ln -s "${SIRF_INSTALL_PATH}/python/sirf/contrib" SIRF-contrib
+  ln -s "${SIRF_INSTALL_PATH:-/opt/SIRF-SuperBuild/INSTALL}/python/sirf/contrib" SIRF-contrib
 fi
 popd
 
@@ -52,6 +52,7 @@ popd
 #start-notebook.py \
 #  --PasswordIdentityProvider.hashed_password='sha1:cbf03843d2bb:8729d2fbec60cacf6485758752789cd9989e756c' \
 #  "$@"
+ln -s /opt/scripts/jupyterhub_config.py
 eval "$@"
 
 trap "stop_service" EXIT INT TERM
