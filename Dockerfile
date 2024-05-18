@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
-ARG BASE_CONTAINER=synerbi/sirf:latest-gpu
+ARG BASE_CONTAINER=synerbi/sirf:devel-gpu
 FROM ${BASE_CONTAINER} as base
 
-RUN pip install --no-cache-dir torch torchvision torchaudio
+RUN pip install --no-cache-dir torch torchvision
 
 # fix entrypoints
 #USER root
