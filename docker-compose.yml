@@ -1,0 +1,18 @@
+services:
+ sirfcil:
+  build: .
+  image: casperdcl/sirfcil
+  user: '1005'
+  group_add: [users]
+  environment:
+    # CLI arguments for https://github.com/SyneRBI/SIRF-Exercises/blob/master/scripts/download_data.sh
+    SIRF_DOWNLOAD_DATA_ARGS: '-m -p'
+  volumes:
+  - ./work:/home/jovyan/work
+  - /mnt/share:/home/jovyan/share
+  restart: unless-stopped
+  ports:
+  - "9002:9002"  # gadgetron
+  - "8090:8888"  # jupyter
+  expose: [8888, 9002]
+  deploy: {resources: {reservations: {devices: [{driver: nvidia, count: all, capabilities: [gpu]}]}}}
